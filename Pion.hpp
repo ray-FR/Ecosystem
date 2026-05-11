@@ -3,6 +3,9 @@
 #include <iostream>
 #include <memory>
 #include <cassert>
+#include <cstdlib>
+#include <ctime>
+
 
 class Pion{
 protected:

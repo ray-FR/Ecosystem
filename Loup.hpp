@@ -6,7 +6,7 @@
 class Loup: public Animal{
 public:
     Loup();
-    void eat(Pion& P) override;
+    void eat(std::shared_ptr<Pion> P) override;
 }; 
 
 

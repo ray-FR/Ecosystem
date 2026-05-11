@@ -2,8 +2,6 @@
 #define HERBE_HPP
 #include "Pion.hpp"
 class Herbe: public Pion{
-public:
-    Herbe();
 };
 
 

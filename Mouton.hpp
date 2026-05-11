@@ -6,7 +6,7 @@
 class Mouton: public Animal{
 public:
     Mouton();
-    void eat(Pion& P) override;
+    void eat(std::shared_ptr<Pion> P) override;
 }; 
 
 

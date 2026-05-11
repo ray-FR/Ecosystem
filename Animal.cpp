@@ -9,25 +9,25 @@ void Animal::time_before_dying(){
     }
 }
 
-void Animal::repro(Animal& P){
-    if(typeid(this) == typeid(P) && this->S != P.S){
+void Animal::repro(std::shared_ptr<Animal> P){
+    if(typeid(this) == typeid(P) && this->S != P->S){
         if(S == 1){
             reproduced = 2;
-            P.reproduced = 1;
+            P->reproduced = 1;
         }
         else{
             reproduced = 1;
-            P.reproduced = 2;
+            P->reproduced = 2;
         }
 
     }
 }
 
-void Animal::play_turn(Animal& P){
+void Animal::play_turn(std::shared_ptr<Pion> P){
     time_before_dying();
     if(typeid(*this) != typeid(P))
         eat(P);
     else
-        repro(*(dynamic_cast<Animal*>(&P)));
+        repro(std::dynamic_pointer_cast<Animal>(P));
 
 }
