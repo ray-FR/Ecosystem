@@ -13,7 +13,7 @@ public:
     virtual void eat(Pion& P) = 0;
     void time_before_dying();
     void repro(Animal& P);
-    void play_turn(Pion& P) override;
+    void play_turn(Animal& P);
 
     
 

@@ -23,9 +23,9 @@ void Animal::repro(Animal& P){
     }
 }
 
-void Animal::play_turn(Pion& P){
+void Animal::play_turn(Animal& P){
     time_before_dying();
-    if(typeid(this) != typeid(P))
+    if(typeid(*this) != typeid(P))
         eat(P);
     else
         repro(*(dynamic_cast<Animal*>(&P)));
