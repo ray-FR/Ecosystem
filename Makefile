@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -fsanitize=address -fsanitize=undefined -g
 
 # Target executable
 TARGET = game.out

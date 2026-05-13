@@ -1,7 +1,6 @@
 #include "Mouton.hpp"
 
 Mouton::Mouton(){
-    srand(time(NULL));
     lifespan = 50;
     time_to_eat_before_dying = 5;
     S = rand() % 2;
@@ -9,8 +8,13 @@ Mouton::Mouton(){
 }
 
 void Mouton::eat(std::shared_ptr<Pion> P){
-    if (auto a = std::dynamic_pointer_cast<Mouton>(P)){
+    if (auto a = std::dynamic_pointer_cast<Herbe>(P)){
+        std::cout << ": Le mouton a mangé de l'herbe de la case ";
+
+
         time_to_eat_before_dying += 5;
-        P->set_salt(2);
+    }
+    else {
+        std::cout << ": Le mouton est allé à la case ";
     }
 }

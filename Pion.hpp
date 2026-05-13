@@ -5,7 +5,8 @@
 #include <cassert>
 #include <cstdlib>
 #include <ctime>
-
+#include <chrono>
+#include <thread>
 
 class Pion{
 protected:
