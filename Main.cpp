@@ -36,14 +36,35 @@ void displayGrid(std::vector<std::vector<std::shared_ptr<Pion>>>& grid, int cols
 
 
 int main(){
-    int rows = 2;
-    int cols = 2;
-    int wolves = 0;
-    int sheeps = 4;
+    int rows;
+    int cols;
+    int wolves;
+    int sheeps;
+    long time_choosen;
+
     int curr_wolves_count = 0;
     int curr_sheeps_count = 0;
     int tour_n = 1;
     int max_regen = 3;
+    
+    std::cout << "Nombre de lignes? ";
+    std::cin >> rows;
+    std::cout << "Nombre de colonnes? ";
+    std::cin >> cols;
+    std::cout << "Nombre de loups? ";
+    std::cin >> wolves;
+    std::cout << "Nombre de moutons? ";
+    std::cin >> sheeps;
+    std::cout << "Combien de secondes entre chaque tour? ";
+    std::cin >> time_choosen;
+    
+    if ((sheeps+wolves) > rows*cols){
+        std::cout << "Erreur. Trop d'animaux. " << std::endl;
+        exit(1);
+    }
+
+
+
     srand(time(NULL));
     std::vector<std::vector<std::shared_ptr<Pion>>> grid(rows, std::vector<std::shared_ptr<Pion>>(cols));
     for(int i = 0; i<rows; i++){
@@ -72,13 +93,32 @@ int main(){
 
 
     while(1){
-        std::cout << "Tour: " << tour_n++ << std::endl;
+        std::cout << "Tour: " << tour_n++ << " Moutons: " << curr_sheeps_count << " Loups: " << curr_wolves_count << std::endl;
         int regen = 0;
+        if (curr_sheeps_count == 0 && curr_wolves_count == 0){
+            std::cout << std::endl << "=== Plus aucun animaux n'est en vie! L'univers est mort! ===" << std::endl << std::endl;
+            exit(0);
+        }
         for(int i = 0; i<rows; i++){
             for (int j = 0; j<cols; j++){
                 
                 if(grid[i][j]->get_salt() == 1){
-                    std::cout << "L'animal à la case (" << i << " " << j <<") est mort!" << std::endl; 
+                    
+                    auto dstM = std::dynamic_pointer_cast<Mouton>(grid[i][j]);
+                    auto dstL = std::dynamic_pointer_cast<Loup>(grid[i][j]);
+                    if (dstM){
+                        curr_sheeps_count--;
+                        std::cout << "Le mouton à la case (" << i << " " << j <<") est mort!" << std::endl; 
+                        std::cout << "Nombre de moutons restants: " << curr_sheeps_count << std::endl;
+                    } 
+                    else{
+                        curr_wolves_count--;
+                        std::cout << "Le loup à la case (" << i << " " << j <<") est mort!" << std::endl; 
+                        std::cout << "Nombre de loups restants: " << curr_wolves_count << std::endl;
+                    
+                    }
+
+
                     grid[i][j] = std::make_shared<Sel>();
                     continue;
                 }
@@ -184,7 +224,6 @@ int main(){
                             }
                             std::cout << "(" << i << " " << j << ")" << " ";
                             a->play_turn(grid[interact_i][interact_j]);
-
                             std::cout << "(" << interact_i << " " << interact_j << ")" << std::endl;
                             
                             if(a->get_reproduced_status() < 1){
@@ -198,7 +237,7 @@ int main(){
                 }
 
                 else{
-                    if (tour_n % 3 == 0 && rand()%2==0 && regen <= max_regen){
+                    if (tour_n % 4 == 0 && rand()%2==0 && regen < max_regen){
                         std::cout << "De l'herbe à magiquement repoussé à la case (" << i << " " << j << ")" << std::endl;
                         grid[i][j] = std::make_shared<Herbe>();
                         regen++;
@@ -212,7 +251,7 @@ int main(){
         }
         std::cout << std::endl;
         displayGrid(grid, cols, rows);
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::seconds(time_choosen));
     }
         
         

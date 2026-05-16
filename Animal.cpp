@@ -30,7 +30,7 @@ void Animal::repro(std::shared_ptr<Animal> P){
 void Animal::play_turn(std::shared_ptr<Pion> P){
     if (time_before_dying())
         return;
-    if(typeid(*this) != typeid(P))
+    if(typeid(this) != typeid(P))
         eat(P);
     else
         repro(std::dynamic_pointer_cast<Animal>(P));
